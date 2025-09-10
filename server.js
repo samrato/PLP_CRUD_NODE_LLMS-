@@ -14,5 +14,9 @@ app.use("/api/students", studentRoutes);
 app.use("/api/courses", courseRoutes);
 
 app.listen(PORT, () => {
-  console.log(` Server running on port ${PORT}`);
+  try {
+    console.log(` Server running on port ${PORT}`);
+  } catch (error) {
+    console.log("There is error in server connection",error)
+  }
 });
