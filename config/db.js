@@ -1,12 +1,7 @@
-import pkg from "pg";
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
-import dotenv from "dotenv";
+const { Pool } = require("pg");
+const dotenv = require("dotenv");
 
 dotenv.config();
-
-const { Pool } = pkg;
 
 const pool = new Pool({
   user: process.env.PG_USER,
@@ -16,14 +11,8 @@ const pool = new Pool({
   port: process.env.PG_PORT,
 });
 
-// Run migrations from init.sql
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+pool.connect()
+  .then(() => console.log(" Database connected successfully"))
+  .catch(err => console.error("Database connection error", err));
 
-const initSql = fs.readFileSync(path.join(__dirname, "models", "init.sql")).toString();
-
-pool.query(initSql)
-  .then(() => console.log("Tables ensured"))
-  .catch((err) => console.error(" Migration error:", err));
-
-export default pool;
+module.exports = pool;

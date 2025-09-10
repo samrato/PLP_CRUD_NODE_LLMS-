@@ -1,4 +1,4 @@
-const pool = require("../models/db");
+const pool = require("../config/db");
 
 // 📌 Get all courses
 exports.getCourses = async (req, res) => {
